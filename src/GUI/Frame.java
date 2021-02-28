@@ -9,7 +9,7 @@ public class Frame extends JFrame {
     private final int alto = 600;
 
     public Frame() {
-        initTemplate();
+        //initTemplate();
     }
 
     public void initTemplate() {
