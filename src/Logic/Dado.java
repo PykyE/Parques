@@ -2,7 +2,8 @@ package Logic;
 
 public class Dado {
 
-    public int tirar() {
-        return (int) Math.floor(Math.random()*(7)+1);
+    public static int tirar() {
+        int asd = (int) Math.floor(Math.random() * (6 - 1 + 1) + 1);
+        return asd;
     }
 }

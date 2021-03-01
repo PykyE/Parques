@@ -8,7 +8,7 @@ public class Tablero {
 
     }
 
-    public Tablero getInstance() {
+    public static Tablero getInstance() {
         if (tablero == null) {
             tablero = new Tablero();
         }
