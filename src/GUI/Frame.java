@@ -1,6 +1,6 @@
 package GUI;
 
-import Logic.Partida;
+import Logic.Singleton.Partida;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -16,7 +16,7 @@ public class Frame extends JFrame implements WindowFocusListener {
     private PanelTablero P_tablero;
     private PanelControles P_controles;
 
-    private Partida partida = Partida.getInstance();
+    private Partida partida;
 
     public Frame() {
         initTemplate();
@@ -29,8 +29,8 @@ public class Frame extends JFrame implements WindowFocusListener {
         setSize(new Dimension(ancho, alto));
         getContentPane().setBackground(new Color(153, 76, 0));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         initComponents();
-        initListeners();
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -43,10 +43,8 @@ public class Frame extends JFrame implements WindowFocusListener {
         P_controles = new PanelControles(this);
         P_controles.setLocation(new Point(P_tablero.getWidth() + 10, 5));
         add(P_controles);
-    }
 
-    public void initListeners() {
-
+        partida = Partida.getInstance();
     }
 
     @Override

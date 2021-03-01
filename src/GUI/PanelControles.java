@@ -1,5 +1,6 @@
 package GUI;
 
+import Logic.Singleton.Partida;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,12 +21,12 @@ public class PanelControles extends JPanel {
     private Frame frameRef;
 
     public PanelControles(Frame frame) {
-        initTemplate();
         frameRef = frame;
+        initTemplate();
     }
 
     private void initComponents() {
-        LblTurno = new JLabel("Turno actual: ");
+        LblTurno = new JLabel("Turno actual: " + Partida.getInstance().getTurnoActual().getNombre());
         LblTurno.setSize(new Dimension(285, 30));
         LblTurno.setLocation(new Point(5, 5));
         LblTurno.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));

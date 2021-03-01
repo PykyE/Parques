@@ -1,5 +1,6 @@
-package Logic;
+package Logic.Singleton;
 
+import Logic.Models.Jugador;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -34,6 +35,10 @@ public class Partida {
 
     public Jugador getTurnoActual() {
         return turnoActual;
+    }
+
+    public ArrayList<Jugador> getJugadores() {
+        return jugadores;
     }
 
 }

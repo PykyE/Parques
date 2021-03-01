@@ -1,4 +1,4 @@
-package Logic;
+package Logic.Strategy;
 
 import Interfaces.MovimientoStrategy;
 

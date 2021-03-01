@@ -1,11 +1,12 @@
-package Logic;
+package Logic.Models;
 
 import Interfaces.Color;
 import java.util.ArrayList;
 
-public class Carcel {
+public class Casilla {
 
     private Color color;
+    private boolean estado;
     private ArrayList<Ficha> fichas;
 
     public Color getColor() {
@@ -14,6 +15,10 @@ public class Carcel {
 
     public ArrayList<Ficha> getFichas() {
         return fichas;
+    }
+
+    public boolean esSeguro() {
+        return estado;
     }
 
 }

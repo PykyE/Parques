@@ -1,7 +1,7 @@
 package Interfaces;
 
 import java.util.ArrayList;
-import Logic.Ficha;
+import Logic.Models.Ficha;
 
 public interface MovimientoStrategy {
 

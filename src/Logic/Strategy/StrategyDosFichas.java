@@ -2,7 +2,7 @@ package Logic.Strategy;
 
 import java.util.ArrayList;
 import Interfaces.MovimientoStrategy;
-import Logic.Ficha;
+import Logic.Models.Ficha;
 
 public class StrategyDosFichas implements MovimientoStrategy {
 

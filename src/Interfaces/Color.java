@@ -1,8 +1,8 @@
 package Interfaces;
 
-import Logic.Carcel;
-import Logic.Casilla;
-import Logic.Ficha;
+import Logic.Models.Carcel;
+import Logic.Models.Casilla;
+import Logic.Models.Ficha;
 
 public interface Color {
 
