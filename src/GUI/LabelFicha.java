@@ -4,16 +4,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 public class LabelFicha extends JLabel {
 
     private final int width = 30, heigth = 30;
-
+    private String id;
     private Color color;
 
-    public LabelFicha() {
+    public LabelFicha(int id) {
+        this.id = String.valueOf(id);
         setSize(new Dimension(width, heigth));
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        repaint();
     }
 
     public void setColor(Color color) {
@@ -23,10 +27,16 @@ public class LabelFicha extends JLabel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        System.out.println("label");
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(color);
         g2.fillOval(0, 0, width, heigth);
+        if(color == Color.RED || color == Color.blue){
+            g2.setColor(Color.WHITE);
+        }else{
+            g2.setColor(Color.BLACK);
+        }
+        g2.drawString(id, (width/2)-5, heigth/2);
+        
     }
 
     public Color getColor() {

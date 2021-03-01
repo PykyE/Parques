@@ -33,31 +33,31 @@ public class Coordenadas {
     }
 
     public static void fillRedJail() {
-        red_jail.add(new Posicion(50, 45));
-        red_jail.add(new Posicion(135, 45));
-        red_jail.add(new Posicion(50, 122));
-        red_jail.add(new Posicion(135, 122));
+        red_jail.add(new Posicion(30, 30));
+        red_jail.add(new Posicion(115, 30));
+        red_jail.add(new Posicion(30, 100));
+        red_jail.add(new Posicion(115, 100));
     }
 
-    public static void fillGreenJail() {
-        green_jail.add(new Posicion(465, 45));
-        green_jail.add(new Posicion(550, 45));
-        green_jail.add(new Posicion(465, 122));
-        green_jail.add(new Posicion(550, 122));
+    public static void fillGreenJail(){
+        green_jail.add(new Posicion(450, 30));
+        green_jail.add(new Posicion(530, 30));
+        green_jail.add(new Posicion(450, 100));
+        green_jail.add(new Posicion(530, 100));
     }
 
     public static void fillBlueJail() {
-        blue_jail.add(new Posicion(465, 470));
-        blue_jail.add(new Posicion(550, 470));
-        blue_jail.add(new Posicion(465, 550));
-        blue_jail.add(new Posicion(550, 550));
+        blue_jail.add(new Posicion(450, 445));
+        blue_jail.add(new Posicion(530, 445));
+        blue_jail.add(new Posicion(450, 520));
+        blue_jail.add(new Posicion(530, 520));
     }
 
     public static void fillYellowJail() {
-        yellow_jail.add(new Posicion(50, 470));
-        yellow_jail.add(new Posicion(135, 470));
-        yellow_jail.add(new Posicion(50, 550));
-        yellow_jail.add(new Posicion(135, 550));
+        yellow_jail.add(new Posicion(30, 445));
+        yellow_jail.add(new Posicion(115, 445));
+        yellow_jail.add(new Posicion(30, 520));
+        yellow_jail.add(new Posicion(115, 520));
     }
 
     public static void fillRedWinLane() {

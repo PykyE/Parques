@@ -11,10 +11,11 @@ public class Ficha {
 
     private int iD;
     private Color color;
-    private LabelFicha LblFicha = new LabelFicha();
+    private LabelFicha LblFicha;
 
     public Ficha(java.awt.Color color, int id) {
         iD = id;
+        LblFicha = new LabelFicha(id);
         if (color == java.awt.Color.RED) {
             this.color = new Rojo();
             this.color.colorearElemento(this);

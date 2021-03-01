@@ -56,10 +56,10 @@ public class PanelTablero extends JPanel implements MouseListener {
         labelTablero.removeAll();
         Partida.getInstance().getJugadores().forEach((jugador) -> {
             jugador.getFichas().forEach((ficha) -> {
-                System.out.println(ficha.getLblFicha().getX() + "     " + ficha.getLblFicha().getY() + "        " + ficha.getLblFicha().getColor() + "       " + ficha.getiD());
                 labelTablero.add(ficha.getLblFicha());
             });
         });
+        labelTablero.repaint();
     }
 
     @Override

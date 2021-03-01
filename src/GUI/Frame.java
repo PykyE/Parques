@@ -53,7 +53,7 @@ public class Frame extends JFrame implements WindowFocusListener {
 
     @Override
     public void windowLostFocus(WindowEvent e) {
-        System.exit(0);
+        //System.exit(0);
     }
 
     public Partida getPartida() {
