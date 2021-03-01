@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 public class LabelFicha extends JLabel {
@@ -16,7 +15,6 @@ public class LabelFicha extends JLabel {
     public LabelFicha(int id) {
         this.id = String.valueOf(id);
         setSize(new Dimension(width, heigth));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
         repaint();
     }
 
