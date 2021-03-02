@@ -173,11 +173,9 @@ public class PanelControles extends JPanel {
                 String dadoSelecc2 = res.get(3).get(0).toString();
 
                 if ((idFichaSelecc1 == idFichaSelecc2)) {
-                    System.out.println("asassa");
                     //Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], 0);
                     Partida.getInstance().getTurnoActual().mover(fichaSelecc1,results[0], results[1]);
                 } else {
-                    ArrayList<Ficha> fichasAMover = new ArrayList<>();
                     fichaSelecc1.add(fichaSelecc2.get(0));
                     System.out.println(fichaSelecc1.get(0).getiD());
                     System.out.println(fichaSelecc1.get(1).getiD());
@@ -187,9 +185,7 @@ public class PanelControles extends JPanel {
                 pasarTurno();
             } catch (NumFichasSeleccIncorrecto ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IndexOutOfBoundsException ex2) {
-                JOptionPane.showMessageDialog(null, ex2.getMessage(), "Errorxd", JOptionPane.ERROR_MESSAGE);
-            }
+            } 
         });
     }
 

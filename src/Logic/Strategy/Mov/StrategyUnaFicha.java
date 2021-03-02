@@ -53,7 +53,14 @@ public class StrategyUnaFicha implements MovimientoStrategy {
         int contador = 0;
         boolean contadorWinLane = false;
         for (int i = 1; i <= (valor1 + valor2); i++) {
-            Casilla casilla = Coordenadas.getCoords_tablero().get(Coordenadas.getCoords_tablero().indexOf(ficha.getCasilla()) + i);
+            Casilla casilla = null;
+            if(Coordenadas.getCoords_tablero().indexOf(ficha.getCasilla())+i == 68){
+                casilla = Coordenadas.getCoords_tablero().get(0);
+                ficha.setCasilla(casilla);
+            }else{
+                casilla = Coordenadas.getCoords_tablero().get(Coordenadas.getCoords_tablero().indexOf(ficha.getCasilla()) + i);
+            }
+            
             if (casilla.getColorGrafico() == ficha.getLblFicha().getColor()) {
                 contadorWinLane = true;
                 continue;
@@ -64,6 +71,7 @@ public class StrategyUnaFicha implements MovimientoStrategy {
         }
         if (contador >= 9) {
             Partida.getInstance().getTurnoActual().getWon().add(ficha);
+            ficha.getLblFicha().setVisible(false);
             return -1;
         }
         return contador;

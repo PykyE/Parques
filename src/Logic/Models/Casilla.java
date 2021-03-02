@@ -12,7 +12,8 @@ public class Casilla {
     private Posicion posicion;
     private ArrayList<Ficha> fichas = new ArrayList<>();
 
-    public Casilla(Posicion posicion,String nameColor) {
+    public Casilla(Posicion posicion,String nameColor,boolean safe) {
+        this.Safe = safe;
         this.posicion = posicion;
         switch (nameColor) {
             case "Azul": {

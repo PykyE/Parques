@@ -51,11 +51,9 @@ public class Jugador {
 
     public void mover(ArrayList<Ficha> fichas, int valor1, int valor2) {
         if (fichas.size() == 1) {
-            System.out.println("1");
             movimiento.setStrategy(new StrategyUnaFicha());
             movimiento.moverFicha(fichas,valor1,valor2);
         } else {
-            System.out.println("2");
             movimiento.setStrategy(new Logic.Strategy.Mov.StrategyDosFichas());
             movimiento.moverFicha(fichas,valor1,valor2);
         }
