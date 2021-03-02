@@ -12,6 +12,7 @@ public class Ficha {
     private int iD;
     private Color color;
     private LabelFicha LblFicha;
+    private Casilla casilla;
 
     public Ficha(java.awt.Color color, int id) {
         iD = id;
@@ -43,8 +44,16 @@ public class Ficha {
         return LblFicha;
     }
 
+    public Casilla getCasilla() {
+        return casilla;
+    }
+
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setCasilla(Casilla casilla) {
+        this.casilla = casilla;
     }
 
 }

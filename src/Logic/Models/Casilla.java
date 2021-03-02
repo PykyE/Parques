@@ -1,13 +1,23 @@
 package Logic.Models;
 
 import Logic.Bridge.Color;
+import Utilities.Posicion;
 import java.util.ArrayList;
 
 public class Casilla {
 
     private Color color;
-    private boolean estado;
-    private ArrayList<Ficha> fichas;
+    private boolean Safe;
+    private Posicion posicion;
+    private ArrayList<Ficha> fichas = new ArrayList<>();
+
+    public Casilla(Posicion posicion) {
+        this.posicion = posicion;
+    }
+
+    public Posicion getPosicion() {
+        return posicion;
+    }
 
     public Color getColor() {
         return color;
@@ -17,8 +27,8 @@ public class Casilla {
         return fichas;
     }
 
-    public boolean esSeguro() {
-        return estado;
+    public boolean isSafe() {
+        return Safe;
     }
 
 }

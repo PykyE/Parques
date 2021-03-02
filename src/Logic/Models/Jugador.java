@@ -11,6 +11,7 @@ public class Jugador {
 
     private String nombre;
     private Color color;
+    private int nroIntentos = 0;
     private Movimiento movimiento = new Movimiento();
     private Sacar sacar = new Sacar();
     private ArrayList<Ficha> fichas = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Jugador {
         return retorno;
     }
 
-    public void sacarFichas(String strat,ArrayList<Ficha> fichas) {
+    public void sacarFichas(String strat, ArrayList<Ficha> fichas) {
         switch (strat) {
             case "Dos":
                 sacar.setStrategy(new StrategyDosFichas());
@@ -49,6 +50,10 @@ public class Jugador {
 
     public void mover() {
 
+    }
+
+    public void setNroIntentos(int nroIntentos) {
+        this.nroIntentos = nroIntentos;
     }
 
     public String getNombre() {
@@ -81,6 +86,10 @@ public class Jugador {
 
     public ArrayList<Ficha> getWon() {
         return won;
+    }
+
+    public int getNroIntentos() {
+        return nroIntentos;
     }
 
 }

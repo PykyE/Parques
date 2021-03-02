@@ -19,10 +19,10 @@ import javax.swing.JPanel;
 
 public class PanelControles extends JPanel {
 
-    private JLabel LblTurno, LblDado1, LblDado2, LblFichasDisp, LblAccion;
-    private ArrayList<JCheckBox> JCboxes = new ArrayList<>();
-    private JButton BtnTirar, BtnMovSac;
-    private JPanel PnlFichas;
+    private JLabel LblTurno, LblDado1, LblDado2;
+    private ArrayList<JCheckBox> JCboxesSacar = new ArrayList<>();
+    private JButton BtnTirar, BtnSacar, BtnMover;
+    private JPanel PnlFichasSacar, PnlFichasMoverDado1, PnlFichasMoverDado2, PnlDados1, PnlDados2;
 
     private int[] results = new int[2];
 
@@ -66,47 +66,67 @@ public class PanelControles extends JPanel {
         LblDado2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(LblDado2);
 
-        LblAccion = new JLabel();
-        LblAccion.setSize(new Dimension(285, 30));
-        LblAccion.setLocation(new Point(5, LblDado1.getY() + LblDado1.getHeight() + 20));
-        LblAccion.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));
-        LblAccion.setHorizontalAlignment(JLabel.CENTER);
-        LblAccion.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        add(LblAccion);
+        BtnSacar = new JButton("Sacar fichas");
+        BtnSacar.setFont(new Font("Montserrat Alternates", Font.PLAIN, 20));
+        BtnSacar.setFocusable(false);
+        BtnSacar.setSize(200, 30);
+        BtnSacar.setEnabled(false);
+        BtnSacar.setLocation(new Point((getWidth() - BtnSacar.getWidth()) / 2, LblDado2.getY() + LblDado2.getHeight() + 20));
+        BtnSacar.setBackground(new Color(144, 238, 144));
+        add(BtnSacar);
 
-        LblFichasDisp = new JLabel("Fichas disponibles");
-        LblFichasDisp.setSize(new Dimension(285, 30));
-        LblFichasDisp.setLocation(new Point(5, LblAccion.getY() + LblAccion.getHeight() + 20));
-        LblFichasDisp.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));
-        LblFichasDisp.setHorizontalAlignment(JLabel.CENTER);
-        LblFichasDisp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        add(LblFichasDisp);
+        PnlFichasSacar = new JPanel(new GridLayout(1, 4));
+        PnlFichasSacar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        PnlFichasSacar.setSize(new Dimension(getWidth() - 10, 35));
+        PnlFichasSacar.setLocation(new Point(5, BtnSacar.getY() + BtnSacar.getHeight() + 20));
+        add(PnlFichasSacar);
 
-        PnlFichas = new JPanel(new GridLayout(1, 4));
-        PnlFichas.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        PnlFichas.setSize(new Dimension(getWidth() - 10, 65));
-        PnlFichas.setLocation(new Point(5, LblFichasDisp.getY() + LblFichasDisp.getHeight() + 20));
-        add(PnlFichas);
+        BtnMover = new JButton("Mover fichas");
+        BtnMover.setFont(new Font("Montserrat Alternates", Font.PLAIN, 20));
+        BtnMover.setFocusable(false);
+        BtnMover.setSize(200, 30);
+        BtnMover.setEnabled(false);
+        BtnMover.setLocation(new Point((getWidth() - BtnMover.getWidth()) / 2, PnlFichasSacar.getY() + PnlFichasSacar.getHeight() + 20));
+        BtnMover.setBackground(new Color(144, 238, 144));
+        add(BtnMover);
 
-        BtnMovSac = new JButton();
-        BtnMovSac.setFont(new Font("Montserrat Alternates", Font.PLAIN, 20));
-        BtnMovSac.setFocusable(false);
-        BtnMovSac.setSize(200, 30);
-        BtnMovSac.setEnabled(false);
-        BtnMovSac.setLocation(new Point((getWidth() - BtnMovSac.getWidth()) / 2, PnlFichas.getY() + PnlFichas.getHeight() + 20));
-        BtnMovSac.setBackground(new Color(144, 238, 144));
-        add(BtnMovSac);
+        PnlFichasMoverDado1 = new JPanel(new GridLayout(1, 4));
+        PnlFichasMoverDado1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        PnlFichasMoverDado1.setSize(new Dimension(getWidth() - 10, 35));
+        PnlFichasMoverDado1.setLocation(new Point(5, BtnMover.getY() + BtnMover.getHeight() + 20));
+        add(PnlFichasMoverDado1);
+
+        PnlDados1 = new JPanel(new GridLayout(1, 4));
+        PnlDados1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        PnlDados1.setSize(new Dimension(getWidth() - 10, 35));
+        PnlDados1.setLocation(new Point(5, PnlFichasMoverDado1.getY() + PnlFichasMoverDado1.getHeight() + 20));
+        add(PnlDados1);
+
+        PnlFichasMoverDado2 = new JPanel(new GridLayout(1, 4));
+        PnlFichasMoverDado2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        PnlFichasMoverDado2.setSize(new Dimension(getWidth() - 10, 35));
+        PnlFichasMoverDado2.setLocation(new Point(5, PnlDados1.getY() + PnlDados1.getHeight() + 20));
+        add(PnlFichasMoverDado2);
+
+        PnlDados2 = new JPanel(new GridLayout(1, 4));
+        PnlDados2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        PnlDados2.setSize(new Dimension(getWidth() - 10, 35));
+        PnlDados2.setLocation(new Point(5, PnlFichasMoverDado2.getY() + PnlFichasMoverDado2.getHeight() + 20));
+        add(PnlDados2);
 
     }
 
     private void pasarTurno() {
         Partida.getInstance().setSiguienteJugador();
-        BtnMovSac.setText("");
-        BtnMovSac.setEnabled(false);
+        BtnSacar.setEnabled(false);
+        BtnMover.setEnabled(false);
         BtnTirar.setEnabled(true);
-        PnlFichas.removeAll();
+        LblDado1.setText(null);
+        LblDado2.setText(null);
+        PnlFichasSacar.removeAll();
         LblTurno.setText("Turno: Jugador " + Partida.getInstance().getTurnoActual().getNameColor());
-        JCboxes.clear();
+        JCboxesSacar.clear();
+
         frameRef.getP_tablero().repaint();
         repaint();
     }
@@ -116,27 +136,26 @@ public class PanelControles extends JPanel {
             results = frameRef.getPartida().getTurnoActual().tirarDados();
             LblDado1.setText("" + results[0]);
             LblDado2.setText("" + results[1]);
-            opciones(results);
+            opcionesTirarDados(results);
         });
 
-        BtnMovSac.addActionListener((e) -> {
-            if (BtnMovSac.getText().equals("Mover fichas")) {
-
-            } else if (BtnMovSac.getText().equals("Sacar fichas")) {
-                try {
-                    if ((results[0] == 1 && results[1] == 1) || (results[0] == 6 && results[1] == 6)) {
-                        ArrayList<Ficha> values = ValidarCondicionesSacar(true);
-                        Partida.getInstance().getTurnoActual().sacarFichas("Cuatro", values);
-                    } else {
-                        ArrayList<Ficha> values = ValidarCondicionesSacar(false);
-                        Partida.getInstance().getTurnoActual().sacarFichas("Dos", values);
-                    }
-                    pasarTurno();
-
-                } catch (NumFichasSeleccIncorrecto ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        BtnSacar.addActionListener((e) -> {
+            try {
+                if ((results[0] == 1 && results[1] == 1) || (results[0] == 6 && results[1] == 6)) {
+                    ArrayList<Ficha> values = ValidarCondicionesSacar(true);
+                    Partida.getInstance().getTurnoActual().sacarFichas("Cuatro", values);
+                } else {
+                    ArrayList<Ficha> values = ValidarCondicionesSacar(false);
+                    Partida.getInstance().getTurnoActual().sacarFichas("Dos", values);
                 }
+                pasarTurno();
+            } catch (NumFichasSeleccIncorrecto ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        BtnMover.addActionListener((e) -> {
+
         });
     }
 
@@ -149,8 +168,8 @@ public class PanelControles extends JPanel {
         initListeners();
     }
 
-    public void opciones(int[] values) {
-        PnlFichas.removeAll();
+    public void opcionesTirarDados(int[] values) {
+        PnlFichasSacar.removeAll();
 
         Jugador actualPlayer = Partida.getInstance().getTurnoActual();
         ArrayList carcel = actualPlayer.getCarcel();
@@ -158,30 +177,45 @@ public class PanelControles extends JPanel {
         ArrayList fichas = actualPlayer.getFichas();
 
         if (carcel.isEmpty()) {
-            showFichasOptions(carcel, fichas, won, false);
+//            showFichasOptionsMover(carcel, fichas, won, false);
             BtnTirar.setEnabled(false);
-            BtnMovSac.setText("Mover fichas");
-            BtnMovSac.setEnabled(true);
+            BtnSacar.setEnabled(false);
+            BtnMover.setEnabled(true);
         } else {
             if (values[0] == values[1]) {
                 if (values[0] == 1 || values[0] == 6) {
-                    showFichasOptions(carcel, fichas, won, true);
+                    showFichasXSacar(carcel, fichas, won, true);
                     BtnTirar.setEnabled(false);
-                    BtnMovSac.setText("Sacar fichas");
-                    BtnMovSac.setEnabled(true);
+                    BtnSacar.setEnabled(true);
+                    BtnMover.setEnabled(false);
                 } else {
                     for (int i = 0; i < carcel.size(); i++) {
-                        generateJCB(i, true);
+                        int index = fichas.indexOf(carcel.get(i));
+                        generateJCB(index, true);
                     }
                     BtnTirar.setEnabled(false);
-                    BtnMovSac.setText("Sacar fichas");
-                    BtnMovSac.setEnabled(true);
+                    BtnSacar.setEnabled(true);
+                    BtnMover.setEnabled(false);
+                }
+            } else {
+                if (carcel.size() == fichas.size()) {
+                    Partida.getInstance().getTurnoActual().setNroIntentos(Partida.getInstance().getTurnoActual().getNroIntentos() + 1);
+                    if (Partida.getInstance().getTurnoActual().getNroIntentos() == 3) {
+                        Partida.getInstance().getTurnoActual().setNroIntentos(0);
+                        JOptionPane.showMessageDialog(null, "¡Siguiente turno!", "Status", JOptionPane.INFORMATION_MESSAGE);
+                        pasarTurno();
+                    }
+                } else {
+//                    showFichasOptionsMover(carcel, fichas, won, true);
+                    BtnTirar.setEnabled(false);
+                    BtnSacar.setEnabled(false);
+                    BtnMover.setEnabled(true);
                 }
             }
         }
     }
 
-    public void showFichasOptions(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
+    public void showFichasXSacar(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
         for (int i = 0; i < 4; i++) {
             if (allPieces) {
                 generateJCB(i, false);
@@ -202,8 +236,8 @@ public class PanelControles extends JPanel {
         newJCB.setEnabled(enabled);
         newJCB.setSelected(!enabled);
         newJCB.setLocation(new Point(5 + i * 85, LblDado1.getY() + LblDado1.getHeight() + 20));
-        PnlFichas.add(newJCB);
-        JCboxes.add(newJCB);
+        PnlFichasSacar.add(newJCB);
+        JCboxesSacar.add(newJCB);
     }
 
     public void ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
@@ -213,13 +247,12 @@ public class PanelControles extends JPanel {
     public ArrayList<Ficha> ValidarCondicionesSacar(boolean allPieces) throws NumFichasSeleccIncorrecto {
         int cont = 0;
         ArrayList<Ficha> fichas = new ArrayList<>();
-        for (int i = 0; i < JCboxes.size(); i++) {
-            if (JCboxes.get(i).isSelected()) {
-                fichas.add(Partida.getInstance().getTurnoActual().getFichas().get((Integer.parseInt(JCboxes.get(i).getText()) - 1)));
+        for (int i = 0; i < JCboxesSacar.size(); i++) {
+            if (JCboxesSacar.get(i).isSelected()) {
+                fichas.add(Partida.getInstance().getTurnoActual().getFichas().get((Integer.parseInt(JCboxesSacar.get(i).getText()) - 1)));
                 cont++;
             }
         }
-
         if (allPieces) {
             if (cont != 4) {
                 throw new NumFichasSeleccIncorrecto("Error sacar todas las fichas de putazo");
