@@ -19,8 +19,12 @@ import javax.swing.JPanel;
 
 public class PanelControles extends JPanel {
 
-    private JLabel LblTurno, LblDado1, LblDado2;
+    private JLabel LblTurno, LblDado1, LblDado2, LblMov1, LblMov2;
     private ArrayList<JCheckBox> JCboxesSacar = new ArrayList<>();
+    private ArrayList<JCheckBox> JCboxesMover1 = new ArrayList<>();
+    private ArrayList<JCheckBox> JCboxesMover2 = new ArrayList<>();
+    private ArrayList<JCheckBox> JCboxesDado1 = new ArrayList<>();
+    private ArrayList<JCheckBox> JCboxesDado2 = new ArrayList<>();
     private JButton BtnTirar, BtnSacar, BtnMover;
     private JPanel PnlFichasSacar, PnlFichasMoverDado1, PnlFichasMoverDado2, PnlDados1, PnlDados2;
 
@@ -90,10 +94,18 @@ public class PanelControles extends JPanel {
         BtnMover.setBackground(new Color(144, 238, 144));
         add(BtnMover);
 
+        LblMov1 = new JLabel("Movimiento #1");
+        LblMov1.setSize(new Dimension(285, 30));
+        LblMov1.setLocation(new Point(getWidth() - LblMov1.getWidth() - 5, (BtnMover.getY() + BtnMover.getHeight() + 20)));
+        LblMov1.setFont(new Font("Montserrat Alternates", Font.BOLD, 15));
+        LblMov1.setHorizontalAlignment(JLabel.CENTER);
+        LblMov1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(LblMov1);
+
         PnlFichasMoverDado1 = new JPanel(new GridLayout(1, 4));
         PnlFichasMoverDado1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         PnlFichasMoverDado1.setSize(new Dimension(getWidth() - 10, 35));
-        PnlFichasMoverDado1.setLocation(new Point(5, BtnMover.getY() + BtnMover.getHeight() + 20));
+        PnlFichasMoverDado1.setLocation(new Point(5, LblMov1.getY() + LblMov1.getHeight() + 10));
         add(PnlFichasMoverDado1);
 
         PnlDados1 = new JPanel(new GridLayout(1, 4));
@@ -102,10 +114,18 @@ public class PanelControles extends JPanel {
         PnlDados1.setLocation(new Point(5, PnlFichasMoverDado1.getY() + PnlFichasMoverDado1.getHeight() + 20));
         add(PnlDados1);
 
+        LblMov2 = new JLabel("Movimiento #2");
+        LblMov2.setSize(new Dimension(285, 30));
+        LblMov2.setLocation(new Point(getWidth() - LblMov2.getWidth() - 5, (PnlDados1.getY() + PnlDados1.getHeight() + 20)));
+        LblMov2.setFont(new Font("Montserrat Alternates", Font.BOLD, 15));
+        LblMov2.setHorizontalAlignment(JLabel.CENTER);
+        LblMov2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(LblMov2);
+
         PnlFichasMoverDado2 = new JPanel(new GridLayout(1, 4));
         PnlFichasMoverDado2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         PnlFichasMoverDado2.setSize(new Dimension(getWidth() - 10, 35));
-        PnlFichasMoverDado2.setLocation(new Point(5, PnlDados1.getY() + PnlDados1.getHeight() + 20));
+        PnlFichasMoverDado2.setLocation(new Point(5, LblMov2.getY() + LblMov2.getHeight() + 10));
         add(PnlFichasMoverDado2);
 
         PnlDados2 = new JPanel(new GridLayout(1, 4));
@@ -176,7 +196,7 @@ public class PanelControles extends JPanel {
         ArrayList fichas = actualPlayer.getFichas();
 
         if (carcel.isEmpty()) {
-//            showFichasOptionsMover(carcel, fichas, won, false);
+            showFichasOptionsMover(carcel, fichas, won);
             BtnTirar.setEnabled(false);
             BtnSacar.setEnabled(false);
             BtnMover.setEnabled(true);
@@ -190,7 +210,7 @@ public class PanelControles extends JPanel {
                 } else {
                     for (int i = 0; i < carcel.size(); i++) {
                         int index = fichas.indexOf(carcel.get(i));
-                        generateJCB(index, true);
+                        generateJCBSacar(index, true);
                     }
                     BtnTirar.setEnabled(false);
                     BtnSacar.setEnabled(true);
@@ -205,7 +225,7 @@ public class PanelControles extends JPanel {
                         pasarTurno();
                     }
                 } else {
-//                    showFichasOptionsMover(carcel, fichas, won, true);
+                    showFichasOptionsMover(carcel, fichas, won);
                     BtnTirar.setEnabled(false);
                     BtnSacar.setEnabled(false);
                     BtnMover.setEnabled(true);
@@ -217,30 +237,14 @@ public class PanelControles extends JPanel {
     public void showFichasXSacar(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
         for (int i = 0; i < 4; i++) {
             if (allPieces) {
-                generateJCB(i, false);
+                generateJCBSacar(i, false);
             } else {
                 if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
-                    generateJCB(i, true);
+                    int index = fichas.indexOf(carcel.get(i));
+                    generateJCBSacar(index, true);
                 }
             }
-
         }
-    }
-
-    public void generateJCB(int i, boolean enabled) {
-        JCheckBox newJCB = new JCheckBox(String.valueOf(i + 1));
-        newJCB.setBackground(null);
-        newJCB.setFocusable(false);
-        newJCB.setSize(new Dimension(30, 30));
-        newJCB.setEnabled(enabled);
-        newJCB.setSelected(!enabled);
-        newJCB.setLocation(new Point(5 + i * 85, LblDado1.getY() + LblDado1.getHeight() + 20));
-        PnlFichasSacar.add(newJCB);
-        JCboxesSacar.add(newJCB);
-    }
-
-    public void ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
-
     }
 
     public ArrayList<Ficha> ValidarCondicionesSacar(boolean allPieces) throws NumFichasSeleccIncorrecto {
@@ -265,31 +269,101 @@ public class PanelControles extends JPanel {
                 return fichas;
             }
         }
+    }
+
+    public void generateJCBSacar(int i, boolean enabled) {
+        JCheckBox newJCB = new JCheckBox(String.valueOf(i + 1));
+        newJCB.setBackground(null);
+        newJCB.setFocusable(false);
+        newJCB.setEnabled(enabled);
+        newJCB.setSelected(!enabled);
+        PnlFichasSacar.add(newJCB);
+        JCboxesSacar.add(newJCB);
+    }
+
+    public void showFichasOptionsMover(ArrayList carcel, ArrayList fichas, ArrayList won) {
+        for (int i = 0; i < 4; i++) {
+            if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
+                generateJCBSMover(i);
+            }
+        }
+        generateJCBSDados();
+    }
+
+    public void ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
 
     }
-    
-    public String getText(String nameColor){
-        System.out.println(nameColor);
+
+    public void generateJCBSMover(int i) {
+        JCheckBox newJCB1 = new JCheckBox(String.valueOf(i + 1));
+        newJCB1.setBackground(null);
+        newJCB1.setFocusable(false);
+        PnlFichasMoverDado1.add(newJCB1);
+        JCboxesMover1.add(newJCB1);
+
+        JCheckBox newJCB2 = new JCheckBox(String.valueOf(i + 1));
+        newJCB2.setBackground(null);
+        newJCB2.setFocusable(false);
+        PnlFichasMoverDado2.add(newJCB2);
+        JCboxesMover2.add(newJCB2);
+    }
+
+    public void generateJCBSDados() {
+
+        JCheckBox dado11 = new JCheckBox("Dado 1");
+        dado11.setBackground(null);
+        dado11.setFocusable(false);
+        dado11.setSize(new Dimension(30, 30));
+
+        JCheckBox dado12 = new JCheckBox("Dado 2");
+        dado12.setBackground(null);
+        dado12.setFocusable(false);
+        dado12.setSize(new Dimension(30, 30));
+
+        PnlDados1.add(dado11);
+        PnlDados1.add(dado12);
+
+        JCboxesDado1.add(dado11);
+        JCboxesDado1.add(dado12);
+
+        JCheckBox dado21 = new JCheckBox("Dado 1");
+        dado21.setBackground(null);
+        dado21.setFocusable(false);
+        dado21.setSize(new Dimension(30, 30));
+
+        JCheckBox dado22 = new JCheckBox("Dado 2");
+        dado22.setBackground(null);
+        dado22.setFocusable(false);
+        dado22.setSize(new Dimension(30, 30));
+
+        PnlDados2.add(dado21);
+        PnlDados2.add(dado22);
+
+        JCboxesDado2.add(dado21);
+        JCboxesDado2.add(dado22);
+    }
+
+    public String getText(String nameColor) {
         String estructura = "<html><body>";
-        switch(nameColor){
+        switch (nameColor) {
             case "Azul" -> {
-                estructura += "<p>Turno jugador: <span style='color:blue;'>"+nameColor+"</span></p>";
+                estructura += "<p>Turno jugador: <span style='color:blue;'>" + nameColor + "</span></p>";
                 break;
             }
             case "Verde" -> {
-                estructura += "<p>Turno jugador: <span style='color:green;'>"+nameColor+"</span></p>";
+                estructura += "<p>Turno jugador: <span style='color:green;'>" + nameColor + "</span></p>";
                 break;
             }
             case "Rojo" -> {
-                estructura += "<p>Turno jugador: <span style='color:red;'>"+nameColor+"</span></p>";
+                estructura += "<p>Turno jugador: <span style='color:red;'>" + nameColor + "</span></p>";
                 break;
             }
             case "Amarillo" -> {
-                estructura += "<p>Turno jugador: <span style='color:yellow;'>"+nameColor+"</span></p>";
+                estructura += "<p>Turno jugador: <span style='color:yellow;'>" + nameColor + "</span></p>";
                 break;
             }
         }
-        estructura +="</body></html>";
+        estructura += "</body></html>";
         return estructura;
     }
 
