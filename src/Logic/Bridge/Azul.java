@@ -1,6 +1,5 @@
 package Logic.Bridge;
 
-import Interfaces.Color;
 import Logic.Models.Casilla;
 import Logic.Models.Ficha;
 import Utilities.Coordenadas;

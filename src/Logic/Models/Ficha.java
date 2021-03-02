@@ -1,7 +1,7 @@
 package Logic.Models;
 
 import GUI.LabelFicha;
-import Interfaces.Color;
+import Logic.Bridge.Color;
 import Logic.Bridge.Amarillo;
 import Logic.Bridge.Azul;
 import Logic.Bridge.Rojo;

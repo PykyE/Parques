@@ -48,4 +48,8 @@ public class Frame extends JFrame {
         return partida;
     }
 
+    public PanelTablero getP_tablero() {
+        return P_tablero;
+    }
+
 }

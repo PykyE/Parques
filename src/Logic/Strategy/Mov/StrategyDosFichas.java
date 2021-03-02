@@ -1,13 +1,12 @@
-package Logic.Strategy;
+package Logic.Strategy.Mov;
 
 import java.util.ArrayList;
-import Interfaces.MovimientoStrategy;
 import Logic.Models.Ficha;
 
 public class StrategyDosFichas implements MovimientoStrategy {
 
     @Override
-    public void moverFicha(ArrayList<Ficha> fichas, int valor) {
+    public void moverFichas(ArrayList<Ficha> fichas, int valor) {
 
     }
 

@@ -1,5 +1,9 @@
 package Logic.Models;
 
+import Logic.Strategy.Sac.Sacar;
+import Logic.Strategy.Mov.Movimiento;
+import Logic.Strategy.Sac.StrategyCuatroFichas;
+import Logic.Strategy.Sac.StrategyDosFichas;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -7,6 +11,8 @@ public class Jugador {
 
     private String nombre;
     private Color color;
+    private Movimiento movimiento = new Movimiento();
+    private Sacar sacar = new Sacar();
     private ArrayList<Ficha> fichas = new ArrayList<>();
     private ArrayList<Ficha> carcel = new ArrayList<>();
     private ArrayList<Ficha> won = new ArrayList<>();
@@ -28,8 +34,17 @@ public class Jugador {
         return retorno;
     }
 
-    public void sacarFichas() {
-        
+    public void sacarFichas(String strat,ArrayList<Ficha> fichas) {
+        switch (strat) {
+            case "Dos":
+                sacar.setStrategy(new StrategyDosFichas());
+                sacar.sacarFichas(fichas);
+                break;
+            case "Cuatro":
+                sacar.setStrategy(new StrategyCuatroFichas());
+                sacar.sacarFichas(fichas);
+                break;
+        }
     }
 
     public void mover() {

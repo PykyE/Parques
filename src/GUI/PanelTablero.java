@@ -64,7 +64,7 @@ public class PanelTablero extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getX() + "         " + e.getY());
+        System.out.println(e.getX()+","+e.getY());
     }
 
     @Override

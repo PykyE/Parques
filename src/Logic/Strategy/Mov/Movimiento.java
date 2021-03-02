@@ -1,6 +1,4 @@
-package Logic.Strategy;
-
-import Interfaces.MovimientoStrategy;
+package Logic.Strategy.Mov;
 
 public class Movimiento {
 

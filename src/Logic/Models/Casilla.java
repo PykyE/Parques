@@ -1,6 +1,6 @@
 package Logic.Models;
 
-import Interfaces.Color;
+import Logic.Bridge.Color;
 import java.util.ArrayList;
 
 public class Casilla {

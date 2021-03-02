@@ -1,6 +1,7 @@
 package GUI;
 
 import Exceptions.NumFichasSeleccIncorrecto;
+import Logic.Models.Ficha;
 import Logic.Models.Jugador;
 import Logic.Singleton.Partida;
 import java.awt.Color;
@@ -22,6 +23,8 @@ public class PanelControles extends JPanel {
     private ArrayList<JCheckBox> JCboxes = new ArrayList<>();
     private JButton BtnTirar, BtnMovSac;
     private JPanel PnlFichas;
+
+    private int[] results = new int[2];
 
     private Frame frameRef;
 
@@ -98,7 +101,7 @@ public class PanelControles extends JPanel {
 
     private void initListeners() {
         BtnTirar.addActionListener((e) -> {
-            int[] results = frameRef.getPartida().getTurnoActual().tirarDados();
+            results = frameRef.getPartida().getTurnoActual().tirarDados();
             LblDado1.setText("Valor dado 1: " + results[0]);
             LblDado2.setText("Valor dado 2: " + results[1]);
             opciones(results);
@@ -106,15 +109,17 @@ public class PanelControles extends JPanel {
 
         BtnMovSac.addActionListener((e) -> {
             if (BtnMovSac.getText().equals("Mover fichas")) {
-                try {
-                    ValidarCondicionesMover();
-                } catch (NumFichasSeleccIncorrecto ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+
             } else if (BtnMovSac.getText().equals("Sacar fichas")) {
                 try {
-                    ValidarCondicionesSacar();
-                    Partida.getInstance().getTurnoActual().sacarFichas();
+                    if ((results[0] == 1 && results[1] == 1) || (results[0] == 6 && results[1] == 6)) {
+                        ArrayList<Ficha> values = ValidarCondicionesSacar(true);
+                        Partida.getInstance().getTurnoActual().sacarFichas("Cuatro", values);
+                    } else {
+                        ArrayList<Ficha> values = ValidarCondicionesSacar(false);
+                        Partida.getInstance().getTurnoActual().sacarFichas("Dos", values);
+                    }
+                    frameRef.getP_tablero().repaint();
                 } catch (NumFichasSeleccIncorrecto ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -140,17 +145,20 @@ public class PanelControles extends JPanel {
         ArrayList fichas = actualPlayer.getFichas();
 
         if (carcel.isEmpty()) {
-            showFichasOptions(carcel, fichas, won);
+            showFichasOptions(carcel, fichas, won, false);
             BtnTirar.setEnabled(false);
             BtnMovSac.setText("Mover fichas");
             BtnMovSac.setEnabled(true);
         } else {
             if (values[0] == values[1]) {
                 if (values[0] == 1 || values[0] == 6) {
-                    JOptionPane.showMessageDialog(null, "Saca las 4 fichas", "¡Par!", JOptionPane.INFORMATION_MESSAGE);
+                    showFichasOptions(carcel, fichas, won, true);
+                    BtnTirar.setEnabled(false);
+                    BtnMovSac.setText("Sacar fichas");
+                    BtnMovSac.setEnabled(true);
                 } else {
                     for (int i = 0; i < carcel.size(); i++) {
-                        generateJCB(i);
+                        generateJCB(i, true);
                     }
                     BtnTirar.setEnabled(false);
                     BtnMovSac.setText("Sacar fichas");
@@ -160,19 +168,26 @@ public class PanelControles extends JPanel {
         }
     }
 
-    public void showFichasOptions(ArrayList carcel, ArrayList fichas, ArrayList won) {
+    public void showFichasOptions(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
         for (int i = 0; i < 4; i++) {
-            if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
-                generateJCB(i);
+            if (allPieces) {
+                generateJCB(i, false);
+            } else {
+                if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
+                    generateJCB(i, true);
+                }
             }
+
         }
     }
 
-    public void generateJCB(int i) {
+    public void generateJCB(int i, boolean enabled) {
         JCheckBox newJCB = new JCheckBox(String.valueOf(i + 1));
         newJCB.setBackground(null);
         newJCB.setFocusable(false);
         newJCB.setSize(new Dimension(30, 30));
+        newJCB.setEnabled(enabled);
+        newJCB.setSelected(!enabled);
         newJCB.setLocation(new Point(5 + i * 85, LblDado1.getY() + LblDado1.getHeight() + 20));
         PnlFichas.add(newJCB);
         JCboxes.add(newJCB);
@@ -182,17 +197,30 @@ public class PanelControles extends JPanel {
 
     }
 
-    public void ValidarCondicionesSacar() throws NumFichasSeleccIncorrecto {
+    public ArrayList<Ficha> ValidarCondicionesSacar(boolean allPieces) throws NumFichasSeleccIncorrecto {
         int cont = 0;
+        ArrayList<Ficha> fichas = new ArrayList<>();
         for (int i = 0; i < JCboxes.size(); i++) {
             if (JCboxes.get(i).isSelected()) {
+                fichas.add(Partida.getInstance().getTurnoActual().getFichas().get((Integer.parseInt(JCboxes.get(i).getText()) - 1)));
                 cont++;
             }
         }
-        System.out.println(cont);
-        if (cont != 2) {
-            throw new NumFichasSeleccIncorrecto("Numero de fichas seleccionadas incorrecto");
+
+        if (allPieces) {
+            if (cont != 4) {
+                throw new NumFichasSeleccIncorrecto("Error sacar todas las fichas de putazo");
+            } else {
+                return fichas;
+            }
+        } else {
+            if (cont != 2) {
+                throw new NumFichasSeleccIncorrecto("Numero de fichas seleccionadas incorrecto");
+            } else {
+                return fichas;
+            }
         }
+
     }
 
 }

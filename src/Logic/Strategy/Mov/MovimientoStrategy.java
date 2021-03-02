@@ -1,10 +1,10 @@
-package Interfaces;
+package Logic.Strategy.Mov;
 
 import java.util.ArrayList;
 import Logic.Models.Ficha;
 
 public interface MovimientoStrategy {
 
-    public void moverFicha(ArrayList<Ficha> fichas, int valor);
+    public void moverFichas(ArrayList<Ficha> fichas, int valor);
 
 }

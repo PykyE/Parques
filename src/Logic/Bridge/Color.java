@@ -1,4 +1,4 @@
-package Interfaces;
+package Logic.Bridge;
 
 import Logic.Models.Casilla;
 import Logic.Models.Ficha;
