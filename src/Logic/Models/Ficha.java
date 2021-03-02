@@ -55,5 +55,7 @@ public class Ficha {
     public void setCasilla(Casilla casilla) {
         this.casilla = casilla;
     }
+    
+    
 
 }

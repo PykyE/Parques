@@ -32,6 +32,7 @@ public class Verde implements Color {
 
     @Override
     public void colorearElemento(Casilla casilla) {
+        casilla.setColorGrafico(java.awt.Color.GREEN);
     }
 
 }

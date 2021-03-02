@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 public class LabelFicha extends JLabel {
 
-    private final int width = 30, heigth = 30;
+    private final int width = 25, heigth = 25;
     private String id;
     private Color color;
 

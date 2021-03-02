@@ -32,6 +32,7 @@ public class Azul implements Color {
 
     @Override
     public void colorearElemento(Casilla casilla) {
+        casilla.setColorGrafico(java.awt.Color.BLUE);
     }
 
 }

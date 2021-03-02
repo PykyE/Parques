@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 public class PanelTablero extends JPanel implements MouseListener {
 
     private JLabel labelTablero;
+    int x,y;
 
     public PanelTablero() {
         Coordenadas.llenarCoordenadas();
@@ -72,6 +73,7 @@ public class PanelTablero extends JPanel implements MouseListener {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
         System.out.println(myString);
+        
     }
 
     @Override

@@ -167,20 +167,24 @@ public class PanelControles extends JPanel {
                 ArrayList<Ficha> fichaSelecc2 = res.get(1);
 
                 int idFichaSelecc1 = fichaSelecc1.get(0).getiD();
-                int idFichaSelecc2 = fichaSelecc1.get(0).getiD();
+                int idFichaSelecc2 = fichaSelecc2.get(0).getiD();
 
                 String dadoSelecc1 = res.get(2).get(0).toString();
                 String dadoSelecc2 = res.get(3).get(0).toString();
 
                 if ((idFichaSelecc1 == idFichaSelecc2)) {
-                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1 == "Dado 1") ? results[0] : results[1], 0);
+                    System.out.println("asassa");
+                    //Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], 0);
+                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1,results[0], results[1]);
                 } else {
+                    ArrayList<Ficha> fichasAMover = new ArrayList<>();
                     fichaSelecc1.add(fichaSelecc2.get(0));
                     System.out.println(fichaSelecc1.get(0).getiD());
                     System.out.println(fichaSelecc1.get(1).getiD());
-                    System.out.println(fichaSelecc1.get(2).getiD());
+                    //System.out.println(fichaSelecc1.get(2).getiD());
                     Partida.getInstance().getTurnoActual().mover(fichaSelecc1, results[0], results[1]);
                 }
+                pasarTurno();
             } catch (NumFichasSeleccIncorrecto ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IndexOutOfBoundsException ex2) {
@@ -403,6 +407,14 @@ public class PanelControles extends JPanel {
         LblDado1.setText(null);
         LblDado2.setText(null);
         PnlFichasSacar.removeAll();
+        PnlDados1.removeAll();
+        PnlDados2.removeAll();
+        PnlFichasMoverDado1.removeAll();
+        PnlFichasMoverDado2.removeAll();
+        JCboxesMover1.clear();
+        JCboxesMover2.clear();
+        JCboxesDado1.clear();
+        JCboxesDado2.clear();
         JCboxesSacar.clear();
         LblTurno.setText(getText(Partida.getInstance().getTurnoActual().getNameColor()));
         frameRef.getP_tablero().repaint();
