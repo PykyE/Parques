@@ -34,7 +34,7 @@ public class PanelControles extends JPanel {
     }
 
     private void initComponents() {
-        LblTurno = new JLabel("Turno: Jugador " + Partida.getInstance().getTurnoActual().getNameColor());
+        LblTurno = new JLabel(getText(Partida.getInstance().getTurnoActual().getNameColor()));
         LblTurno.setSize(new Dimension(285, 30));
         LblTurno.setLocation(new Point(5, 5));
         LblTurno.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));
@@ -105,7 +105,7 @@ public class PanelControles extends JPanel {
         BtnMovSac.setEnabled(false);
         BtnTirar.setEnabled(true);
         PnlFichas.removeAll();
-        LblTurno.setText("Turno: Jugador " + Partida.getInstance().getTurnoActual().getNameColor());
+        LblTurno.setText(getText(Partida.getInstance().getTurnoActual().getNameColor()));
         JCboxes.clear();
         frameRef.getP_tablero().repaint();
         repaint();
@@ -234,6 +234,31 @@ public class PanelControles extends JPanel {
             }
         }
 
+    }
+    
+    public String getText(String nameColor){
+        System.out.println(nameColor);
+        String estructura = "<html><body>";
+        switch(nameColor){
+            case "Azul" -> {
+                estructura += "<p>Turno jugador: <span style='color:blue;'>"+nameColor+"</span></p>";
+                break;
+            }
+            case "Verde" -> {
+                estructura += "<p>Turno jugador: <span style='color:green;'>"+nameColor+"</span></p>";
+                break;
+            }
+            case "Rojo" -> {
+                estructura += "<p>Turno jugador: <span style='color:red;'>"+nameColor+"</span></p>";
+                break;
+            }
+            case "Amarillo" -> {
+                estructura += "<p>Turno jugador: <span style='color:yellow;'>"+nameColor+"</span></p>";
+                break;
+            }
+        }
+        estructura +="</body></html>";
+        return estructura;
     }
 
 }
