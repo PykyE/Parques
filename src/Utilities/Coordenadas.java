@@ -6,6 +6,8 @@ public class Coordenadas {
 
     private static ArrayList<Posicion> coords_tablero = new ArrayList<>();
 
+    private static ArrayList<Posicion> salidas = new ArrayList<>();
+
     private static ArrayList<Posicion> red_jail = new ArrayList<>();
     private static ArrayList<Posicion> green_jail = new ArrayList<>();
     private static ArrayList<Posicion> blue_jail = new ArrayList<>();
@@ -32,6 +34,13 @@ public class Coordenadas {
 
     }
 
+    public static void fillSalidas() {
+        salidas.add(new Posicion(482, 221));
+        salidas.add(new Posicion(482, 221));
+        salidas.add(new Posicion(482, 221));
+        salidas.add(new Posicion(482, 221));
+    }
+
     public static void fillRedJail() {
         red_jail.add(new Posicion(30, 30));
         red_jail.add(new Posicion(115, 30));
@@ -39,7 +48,7 @@ public class Coordenadas {
         red_jail.add(new Posicion(115, 100));
     }
 
-    public static void fillGreenJail(){
+    public static void fillGreenJail() {
         green_jail.add(new Posicion(450, 30));
         green_jail.add(new Posicion(530, 30));
         green_jail.add(new Posicion(450, 100));

@@ -14,9 +14,24 @@ public class Jugador {
         this.nombre = name;
         this.color = color;
         for (int i = 1; i <= 4; i++) {
-            Ficha newFicha = new Ficha(color,i);
+            Ficha newFicha = new Ficha(color, i);
             fichas.add(newFicha);
         }
+    }
+
+    public int[] tirarDados() {
+        int[] retorno = new int[2];
+        retorno[0] = Dado.tirar();
+        retorno[1] = Dado.tirar();
+        return retorno;
+    }
+
+    public void sacarFichas() {
+
+    }
+
+    public void mover() {
+
     }
 
     public String getNombre() {
@@ -27,19 +42,24 @@ public class Jugador {
         return score;
     }
 
-    public int[] tirarDados() {
-        int[] retorno = new int[2];
-        retorno[0] = Dado.tirar();
-        retorno[1] = Dado.tirar();
-        return retorno;
-    }
-
     public ArrayList<Ficha> getFichas() {
         return fichas;
     }
 
-    public void mover() {
+    public Color getColor() {
+        return color;
+    }
 
+    public String getNameColor() {
+        if (color == java.awt.Color.RED) {
+            return "Rojo";
+        } else if (color == java.awt.Color.BLUE) {
+            return "Azul";
+        } else if (color == java.awt.Color.GREEN) {
+            return "Verde";
+        } else {
+            return "Amarillo";
+        }
     }
 
 }
