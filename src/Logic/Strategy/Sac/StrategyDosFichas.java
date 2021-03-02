@@ -15,7 +15,7 @@ public class StrategyDosFichas implements SacarStrategy {
     @Override
     public void sacarFichas(ArrayList<Ficha> fichas) {
         Jugador actualPlayer = Partida.getInstance().getTurnoActual();
-        ArrayList carcel = actualPlayer.getCarcel();
+        ArrayList<Ficha> carcel = actualPlayer.getCarcel();
         fichas.forEach((ficha) -> {
             carcel.remove(ficha);
             if (ficha.getColor() instanceof Rojo) {

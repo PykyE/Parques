@@ -8,7 +8,7 @@ public class Partida {
 
     private static Partida instance;
 
-    private Tablero tablero = Tablero.getInstance();
+    //private Tablero tablero = Tablero.getInstance();
     private ArrayList<Jugador> jugadores = new ArrayList<>();
     private Jugador turnoActual;
 

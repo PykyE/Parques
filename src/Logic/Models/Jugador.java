@@ -60,6 +60,10 @@ public class Jugador {
         return nombre;
     }
 
+    public Movimiento getMovimiento(){
+        return movimiento;
+    }
+
     public ArrayList<Ficha> getFichas() {
         return fichas;
     }
