@@ -6,8 +6,8 @@ import Logic.Models.Ficha;
 public class StrategyUnaFicha implements MovimientoStrategy {
 
     @Override
-    public void moverFichas(ArrayList<Ficha> fichas, int valor) {
-        
+    public void moverFichas(ArrayList<Ficha> fichas, int valor1, int valor2) {
+
     }
 
 }
