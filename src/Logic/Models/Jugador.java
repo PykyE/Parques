@@ -2,6 +2,7 @@ package Logic.Models;
 
 import Logic.Strategy.Sac.Sacar;
 import Logic.Strategy.Mov.Movimiento;
+import Logic.Strategy.Mov.StrategyUnaFicha;
 import Logic.Strategy.Sac.StrategyCuatroFichas;
 import Logic.Strategy.Sac.StrategyDosFichas;
 import java.awt.Color;
@@ -48,8 +49,14 @@ public class Jugador {
         }
     }
 
-    public void mover() {
-
+    public void mover(ArrayList<Ficha> fichas, int valor1, int valor2) {
+        if (valor2 == 0) {
+            movimiento.setStrategy(new StrategyUnaFicha());
+            movimiento.moverFicha();
+        } else {
+            movimiento.setStrategy(new Logic.Strategy.Mov.StrategyDosFichas());
+            movimiento.moverFicha();
+        }
     }
 
     public void setNroIntentos(int nroIntentos) {

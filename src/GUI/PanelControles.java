@@ -136,20 +136,6 @@ public class PanelControles extends JPanel {
 
     }
 
-    private void pasarTurno() {
-        Partida.getInstance().setSiguienteJugador();
-        BtnSacar.setEnabled(false);
-        BtnMover.setEnabled(false);
-        BtnTirar.setEnabled(true);
-        LblDado1.setText(null);
-        LblDado2.setText(null);
-        PnlFichasSacar.removeAll();
-        JCboxesSacar.clear();
-        LblTurno.setText(getText(Partida.getInstance().getTurnoActual().getNameColor()));
-        frameRef.getP_tablero().repaint();
-        repaint();
-    }
-
     private void initListeners() {
         BtnTirar.addActionListener((e) -> {
             results = frameRef.getPartida().getTurnoActual().tirarDados();
@@ -174,7 +160,32 @@ public class PanelControles extends JPanel {
         });
 
         BtnMover.addActionListener((e) -> {
+            try {
+                ArrayList<ArrayList> res = ValidarCondicionesMover();
 
+                ArrayList<Ficha> fichaSelecc1 = res.get(0);
+                ArrayList<Ficha> fichaSelecc2 = res.get(1);
+
+                int idFichaSelecc1 = fichaSelecc1.get(0).getiD();
+                int idFichaSelecc2 = fichaSelecc1.get(0).getiD();
+
+                String dadoSelecc1 = res.get(2).get(0).toString();
+                String dadoSelecc2 = res.get(3).get(0).toString();
+
+                if ((idFichaSelecc1 == idFichaSelecc2)) {
+                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1 == "Dado 1") ? results[0] : results[1], 0);
+                } else {
+                    fichaSelecc1.add(fichaSelecc2.get(0));
+                    System.out.println(fichaSelecc1.get(0).getiD());
+                    System.out.println(fichaSelecc1.get(1).getiD());
+                    System.out.println(fichaSelecc1.get(2).getiD());
+                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, results[0], results[1]);
+                }
+            } catch (NumFichasSeleccIncorrecto ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IndexOutOfBoundsException ex2) {
+                JOptionPane.showMessageDialog(null, ex2.getMessage(), "Errorxd", JOptionPane.ERROR_MESSAGE);
+            }
         });
     }
 
@@ -290,8 +301,50 @@ public class PanelControles extends JPanel {
         generateJCBSDados();
     }
 
-    public void ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
+    public ArrayList<ArrayList> ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
+        int contadorPanel1 = 0, contadorPanel2 = 0, contadorDados1 = 0, contadorDados2 = 0;
+        ArrayList<ArrayList> retorno = new ArrayList<>();
+        ArrayList<Ficha> seleccPanel1 = new ArrayList<>();
+        ArrayList<Ficha> seleccPanel2 = new ArrayList<>();
+        ArrayList<String> seleccPanelDados1 = new ArrayList<>();
+        ArrayList<String> seleccPanelDados2 = new ArrayList<>();
+        for (int i = 0; i < JCboxesMover1.size(); i++) {
+            if (JCboxesMover1.get(i).isSelected()) {
+                contadorPanel1++;
+                seleccPanel1.add(Partida.getInstance().getTurnoActual().getFichas().get((Integer.parseInt(JCboxesMover1.get(i).getText()) - 1)));
+            }
+        }
+        for (int i = 0; i < JCboxesMover2.size(); i++) {
+            if (JCboxesMover2.get(i).isSelected()) {
+                contadorPanel2++;
+                seleccPanel2.add(Partida.getInstance().getTurnoActual().getFichas().get((Integer.parseInt(JCboxesMover2.get(i).getText()) - 1)));
+            }
+        }
+        for (int i = 0; i < JCboxesDado1.size(); i++) {
+            if (JCboxesDado1.get(i).isSelected()) {
+                contadorDados1++;
+                seleccPanelDados1.add(JCboxesDado1.get(i).getText());
+            }
+        }
+        for (int i = 0; i < JCboxesDado2.size(); i++) {
+            if (JCboxesDado2.get(i).isSelected()) {
+                contadorDados2++;
+                seleccPanelDados2.add(JCboxesDado1.get(i).getText());
+            }
+        }
 
+        if (contadorPanel1 != 1 || contadorPanel2 != 1 || contadorDados1 != 1 || contadorDados2 != 1) {
+            throw new NumFichasSeleccIncorrecto("Numero de fichas/dados seleccionados incorrecto");
+        } else if ((seleccPanel1.get(0).getiD() != seleccPanel2.get(0).getiD()) && (seleccPanelDados1.get(0).toString() == seleccPanelDados2.get(0).toString())) {
+            throw new NumFichasSeleccIncorrecto("Mismo valor de dados seleccionados para distintas fichas");
+        } else {
+            retorno.add(seleccPanel1);
+            retorno.add(seleccPanel2);
+            retorno.add(seleccPanelDados1);
+            retorno.add(seleccPanelDados2);
+        }
+
+        return retorno;
     }
 
     public void generateJCBSMover(int i) {
@@ -309,7 +362,6 @@ public class PanelControles extends JPanel {
     }
 
     public void generateJCBSDados() {
-
         JCheckBox dado11 = new JCheckBox("Dado 1");
         dado11.setBackground(null);
         dado11.setFocusable(false);
@@ -341,6 +393,20 @@ public class PanelControles extends JPanel {
 
         JCboxesDado2.add(dado21);
         JCboxesDado2.add(dado22);
+    }
+
+    private void pasarTurno() {
+        Partida.getInstance().setSiguienteJugador();
+        BtnSacar.setEnabled(false);
+        BtnMover.setEnabled(false);
+        BtnTirar.setEnabled(true);
+        LblDado1.setText(null);
+        LblDado2.setText(null);
+        PnlFichasSacar.removeAll();
+        JCboxesSacar.clear();
+        LblTurno.setText(getText(Partida.getInstance().getTurnoActual().getNameColor()));
+        frameRef.getP_tablero().repaint();
+        repaint();
     }
 
     public String getText(String nameColor) {

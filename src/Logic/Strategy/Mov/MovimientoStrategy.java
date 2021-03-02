@@ -5,6 +5,6 @@ import Logic.Models.Ficha;
 
 public interface MovimientoStrategy {
 
-    public void moverFichas(ArrayList<Ficha> fichas, int valor);
+    public void moverFichas(ArrayList<Ficha> fichas, int valor1, int valor2);
 
 }
