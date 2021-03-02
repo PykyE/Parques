@@ -7,8 +7,9 @@ public class Jugador {
 
     private String nombre;
     private Color color;
-    private int score;
     private ArrayList<Ficha> fichas = new ArrayList<>();
+    private ArrayList<Ficha> carcel = new ArrayList<>();
+    private ArrayList<Ficha> won = new ArrayList<>();
 
     public Jugador(String name, Color color) {
         this.nombre = name;
@@ -16,6 +17,7 @@ public class Jugador {
         for (int i = 1; i <= 4; i++) {
             Ficha newFicha = new Ficha(color, i);
             fichas.add(newFicha);
+            carcel.add(newFicha);
         }
     }
 
@@ -27,7 +29,7 @@ public class Jugador {
     }
 
     public void sacarFichas() {
-
+        
     }
 
     public void mover() {
@@ -36,10 +38,6 @@ public class Jugador {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     public ArrayList<Ficha> getFichas() {
@@ -60,6 +58,14 @@ public class Jugador {
         } else {
             return "Amarillo";
         }
+    }
+
+    public ArrayList<Ficha> getCarcel() {
+        return carcel;
+    }
+
+    public ArrayList<Ficha> getWon() {
+        return won;
     }
 
 }

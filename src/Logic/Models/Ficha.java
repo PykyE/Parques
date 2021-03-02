@@ -31,10 +31,6 @@ public class Ficha {
         }
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public int getiD() {
         return iD;
     }
@@ -45,6 +41,10 @@ public class Ficha {
 
     public LabelFicha getLblFicha() {
         return LblFicha;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
 }

@@ -1,5 +1,6 @@
 package GUI;
 
+import Exceptions.NumFichasSeleccIncorrecto;
 import Logic.Models.Jugador;
 import Logic.Singleton.Partida;
 import java.awt.Color;
@@ -17,9 +18,9 @@ import javax.swing.JPanel;
 
 public class PanelControles extends JPanel {
 
-    private JLabel LblTurno, LblDado1, LblDado2, LblFichasDisp;
-    private ArrayList<JCheckBox> JCboxes;
-    private JButton BtnTirar;
+    private JLabel LblTurno, LblDado1, LblDado2, LblFichasDisp, LblAccion;
+    private ArrayList<JCheckBox> JCboxes = new ArrayList<>();
+    private JButton BtnTirar, BtnMovSac;
     private JPanel PnlFichas;
 
     private Frame frameRef;
@@ -62,20 +63,36 @@ public class PanelControles extends JPanel {
         LblDado2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(LblDado2);
 
+        LblAccion = new JLabel();
+        LblAccion.setSize(new Dimension(285, 30));
+        LblAccion.setLocation(new Point(5, LblDado1.getY() + LblDado1.getHeight() + 20));
+        LblAccion.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));
+        LblAccion.setHorizontalAlignment(JLabel.CENTER);
+        LblAccion.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(LblAccion);
+
         LblFichasDisp = new JLabel("Fichas disponibles");
         LblFichasDisp.setSize(new Dimension(285, 30));
-        LblFichasDisp.setLocation(new Point(5, LblDado1.getY() + LblDado1.getHeight() + 20));
+        LblFichasDisp.setLocation(new Point(5, LblAccion.getY() + LblAccion.getHeight() + 20));
         LblFichasDisp.setFont(new Font("Montserrat Alternates", Font.BOLD, 20));
         LblFichasDisp.setHorizontalAlignment(JLabel.CENTER);
         LblFichasDisp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(LblFichasDisp);
 
-        JCboxes = new ArrayList<>();
         PnlFichas = new JPanel(new GridLayout(1, 4));
         PnlFichas.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         PnlFichas.setSize(new Dimension(getWidth() - 10, 65));
         PnlFichas.setLocation(new Point(5, LblFichasDisp.getY() + LblFichasDisp.getHeight() + 20));
         add(PnlFichas);
+
+        BtnMovSac = new JButton();
+        BtnMovSac.setFont(new Font("Montserrat Alternates", Font.PLAIN, 20));
+        BtnMovSac.setFocusable(false);
+        BtnMovSac.setSize(200, 30);
+        BtnMovSac.setEnabled(false);
+        BtnMovSac.setLocation(new Point((getWidth() - BtnMovSac.getWidth()) / 2, PnlFichas.getY() + PnlFichas.getHeight() + 20));
+        BtnMovSac.setBackground(new Color(144, 238, 144));
+        add(BtnMovSac);
 
     }
 
@@ -85,6 +102,23 @@ public class PanelControles extends JPanel {
             LblDado1.setText("Valor dado 1: " + results[0]);
             LblDado2.setText("Valor dado 2: " + results[1]);
             opciones(results);
+        });
+
+        BtnMovSac.addActionListener((e) -> {
+            if (BtnMovSac.getText().equals("Mover fichas")) {
+                try {
+                    ValidarCondicionesMover();
+                } catch (NumFichasSeleccIncorrecto ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (BtnMovSac.getText().equals("Sacar fichas")) {
+                try {
+                    ValidarCondicionesSacar();
+                    Partida.getInstance().getTurnoActual().sacarFichas();
+                } catch (NumFichasSeleccIncorrecto ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
     }
 
@@ -98,25 +132,66 @@ public class PanelControles extends JPanel {
     }
 
     public void opciones(int[] values) {
+        PnlFichas.removeAll();
 
-        if (values[0] == values[1]) {
-            if ((values[0] == 6 && values[1] == 6) || ((values[0] == 1 && values[1] == 1))) {
-                JOptionPane.showMessageDialog(null, "Saca las 4 fichas", "¡Par!", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+        Jugador actualPlayer = Partida.getInstance().getTurnoActual();
+        ArrayList carcel = actualPlayer.getCarcel();
+        ArrayList won = actualPlayer.getWon();
+        ArrayList fichas = actualPlayer.getFichas();
 
-            }
+        if (carcel.isEmpty()) {
+            showFichasOptions(carcel, fichas, won);
+            BtnTirar.setEnabled(false);
+            BtnMovSac.setText("Mover fichas");
+            BtnMovSac.setEnabled(true);
         } else {
-            for (int i = 0; i < 4; i++) {
-                
-                Jugador actualPlayer = Partida.getInstance().getTurnoActual();
-                
-                JCheckBox newJCB = new JCheckBox(String.valueOf(i + 1));
-                newJCB.setBackground(null);
-                newJCB.setFocusable(false);
-                newJCB.setSize(new Dimension(30, 30));
-                newJCB.setLocation(new Point(5 + i * 85, LblDado1.getY() + LblDado1.getHeight() + 20));
-                PnlFichas.add(newJCB);
+            if (values[0] == values[1]) {
+                if (values[0] == 1 || values[0] == 6) {
+                    JOptionPane.showMessageDialog(null, "Saca las 4 fichas", "¡Par!", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    for (int i = 0; i < carcel.size(); i++) {
+                        generateJCB(i);
+                    }
+                    BtnTirar.setEnabled(false);
+                    BtnMovSac.setText("Sacar fichas");
+                    BtnMovSac.setEnabled(true);
+                }
             }
+        }
+    }
+
+    public void showFichasOptions(ArrayList carcel, ArrayList fichas, ArrayList won) {
+        for (int i = 0; i < 4; i++) {
+            if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
+                generateJCB(i);
+            }
+        }
+    }
+
+    public void generateJCB(int i) {
+        JCheckBox newJCB = new JCheckBox(String.valueOf(i + 1));
+        newJCB.setBackground(null);
+        newJCB.setFocusable(false);
+        newJCB.setSize(new Dimension(30, 30));
+        newJCB.setLocation(new Point(5 + i * 85, LblDado1.getY() + LblDado1.getHeight() + 20));
+        PnlFichas.add(newJCB);
+        JCboxes.add(newJCB);
+    }
+
+    public void ValidarCondicionesMover() throws NumFichasSeleccIncorrecto {
+
+    }
+
+    public void ValidarCondicionesSacar() throws NumFichasSeleccIncorrecto {
+        int cont = 0;
+        for (int i = 0; i < JCboxes.size(); i++) {
+            if (JCboxes.get(i).isSelected()) {
+                cont++;
+            }
+        }
+        System.out.println(cont);
+        if (cont != 2) {
+            throw new NumFichasSeleccIncorrecto("Numero de fichas seleccionadas incorrecto");
         }
     }
 

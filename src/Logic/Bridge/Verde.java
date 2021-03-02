@@ -1,7 +1,6 @@
 package Logic.Bridge;
 
 import Interfaces.Color;
-import Logic.Models.Carcel;
 import Logic.Models.Casilla;
 import Logic.Models.Ficha;
 import Utilities.Coordenadas;
@@ -34,10 +33,6 @@ public class Verde implements Color {
 
     @Override
     public void colorearElemento(Casilla casilla) {
-    }
-
-    @Override
-    public void colorearElemento(Carcel carcel) {
     }
 
 }
