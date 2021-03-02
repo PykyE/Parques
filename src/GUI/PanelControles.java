@@ -99,11 +99,23 @@ public class PanelControles extends JPanel {
 
     }
 
+    private void pasarTurno() {
+        Partida.getInstance().setSiguienteJugador();
+        BtnMovSac.setText("");
+        BtnMovSac.setEnabled(false);
+        BtnTirar.setEnabled(true);
+        PnlFichas.removeAll();
+        LblTurno.setText("Turno: Jugador " + Partida.getInstance().getTurnoActual().getNameColor());
+        JCboxes.clear();
+        frameRef.getP_tablero().repaint();
+        repaint();
+    }
+
     private void initListeners() {
         BtnTirar.addActionListener((e) -> {
             results = frameRef.getPartida().getTurnoActual().tirarDados();
-            LblDado1.setText("Valor dado 1: " + results[0]);
-            LblDado2.setText("Valor dado 2: " + results[1]);
+            LblDado1.setText("" + results[0]);
+            LblDado2.setText("" + results[1]);
             opciones(results);
         });
 
@@ -119,7 +131,8 @@ public class PanelControles extends JPanel {
                         ArrayList<Ficha> values = ValidarCondicionesSacar(false);
                         Partida.getInstance().getTurnoActual().sacarFichas("Dos", values);
                     }
-                    frameRef.getP_tablero().repaint();
+                    pasarTurno();
+
                 } catch (NumFichasSeleccIncorrecto ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }

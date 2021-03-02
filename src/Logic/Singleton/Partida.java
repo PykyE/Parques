@@ -22,8 +22,8 @@ public class Partida {
             ArrayList<Jugador> newPlayers = new ArrayList<>();
             newPlayers.add(new Jugador("Jugador 1", Color.RED));
             newPlayers.add(new Jugador("Jugador 2", Color.GREEN));
-            newPlayers.add(new Jugador("Jugador 3", Color.YELLOW));
-            newPlayers.add(new Jugador("Jugador 4", Color.BLUE));
+            newPlayers.add(new Jugador("Jugador 3", Color.BLUE));
+            newPlayers.add(new Jugador("Jugador 4", Color.YELLOW));
             instance = new Partida(newPlayers);
         }
         return instance;
@@ -39,6 +39,15 @@ public class Partida {
 
     public ArrayList<Jugador> getJugadores() {
         return jugadores;
+    }
+    
+    public void setSiguienteJugador(){
+        int pos = jugadores.indexOf(turnoActual);
+        if((pos) == 3){
+            turnoActual = jugadores.get(0);
+        }else{
+            turnoActual = jugadores.get(pos+1);
+        }
     }
 
 }
