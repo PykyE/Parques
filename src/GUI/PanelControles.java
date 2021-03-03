@@ -149,9 +149,12 @@ public class PanelControles extends JPanel {
                 if ((results[0] == 1 && results[1] == 1) || (results[0] == 6 && results[1] == 6)) {
                     ArrayList<Ficha> values = ValidarCondicionesSacar(true);
                     Partida.getInstance().getTurnoActual().sacarFichas("Cuatro", values);
-                } else {
+                } else if (Partida.getInstance().getTurnoActual().getCarcel().size() != 1) {
                     ArrayList<Ficha> values = ValidarCondicionesSacar(false);
                     Partida.getInstance().getTurnoActual().sacarFichas("Dos", values);
+                } else {
+                    ArrayList<Ficha> values = ValidarCondicionesSacar(false);
+                    Partida.getInstance().getTurnoActual().sacarFichas("Uno", values);
                 }
                 pasarTurno();
             } catch (NumFichasSeleccIncorrecto ex) {
@@ -173,19 +176,15 @@ public class PanelControles extends JPanel {
                 String dadoSelecc2 = res.get(3).get(0).toString();
 
                 if ((idFichaSelecc1 == idFichaSelecc2)) {
-                    //Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], 0);
-                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1,results[0], results[1]);
+                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], (dadoSelecc2.equals("Dado 1")) ? results[0] : results[1]);
                 } else {
                     fichaSelecc1.add(fichaSelecc2.get(0));
-                    System.out.println(fichaSelecc1.get(0).getiD());
-                    System.out.println(fichaSelecc1.get(1).getiD());
-                    //System.out.println(fichaSelecc1.get(2).getiD());
-                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, results[0], results[1]);
+                    Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], (dadoSelecc2.equals("Dado 1")) ? results[0] : results[1]);
                 }
                 pasarTurno();
             } catch (NumFichasSeleccIncorrecto ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } 
+            }
         });
     }
 
@@ -275,7 +274,11 @@ public class PanelControles extends JPanel {
             }
         } else {
             if (cont != 2) {
-                throw new NumFichasSeleccIncorrecto("Numero de fichas seleccionadas incorrecto");
+                if (Partida.getInstance().getTurnoActual().getCarcel().size() == 1) {
+                    return fichas;
+                } else {
+                    throw new NumFichasSeleccIncorrecto("Numero de fichas seleccionadas incorrecto");
+                }
             } else {
                 return fichas;
             }
@@ -329,7 +332,7 @@ public class PanelControles extends JPanel {
         for (int i = 0; i < JCboxesDado2.size(); i++) {
             if (JCboxesDado2.get(i).isSelected()) {
                 contadorDados2++;
-                seleccPanelDados2.add(JCboxesDado1.get(i).getText());
+                seleccPanelDados2.add(JCboxesDado2.get(i).getText());
             }
         }
 
@@ -337,6 +340,8 @@ public class PanelControles extends JPanel {
             throw new NumFichasSeleccIncorrecto("Numero de fichas/dados seleccionados incorrecto");
         } else if ((seleccPanel1.get(0).getiD() != seleccPanel2.get(0).getiD()) && (seleccPanelDados1.get(0).toString() == seleccPanelDados2.get(0).toString())) {
             throw new NumFichasSeleccIncorrecto("Mismo valor de dados seleccionados para distintas fichas");
+        } else if (seleccPanel1.get(0).getiD() == seleccPanel2.get(0).getiD() && seleccPanelDados1.get(0).toString() == seleccPanelDados2.get(0).toString() && results[0] != results[1]) {
+            throw new NumFichasSeleccIncorrecto("bro");
         } else {
             retorno.add(seleccPanel1);
             retorno.add(seleccPanel2);

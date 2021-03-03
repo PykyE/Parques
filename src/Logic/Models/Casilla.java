@@ -21,7 +21,7 @@ public class Casilla {
                 color.colorearElemento(this);
                 break;
             }
-            case "Rojo": {
+            case "Roja": {
                 color = new Rojo();
                 color.colorearElemento(this);
                 break;

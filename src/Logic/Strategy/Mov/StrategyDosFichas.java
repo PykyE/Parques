@@ -16,6 +16,7 @@ public class StrategyDosFichas implements MovimientoStrategy {
         int y = posicionFinal.getPosicion().getY();
         ficha.getLblFicha().setLocation(x, y);
         ficha.setCasilla(posicionFinal);
+        posicionFinal.getFichas().add(ficha);
     }
 
     @Override
@@ -51,6 +52,18 @@ public class StrategyDosFichas implements MovimientoStrategy {
 
         } else {
             Casilla posicionFinal = Coordenadas.getCoords_tablero().get(indiceFinalUno);
+            if (!posicionFinal.getFichas().isEmpty() && !posicionFinal.isSafe()) {
+                posicionFinal.getFichas().forEach((f) -> {
+                    if (f.getLblFicha().getColor() != fichaUno.getLblFicha().getColor()) {
+                        f.getColor().colorearElemento(f);
+                        Partida.getInstance().getJugadores().forEach((player) -> {
+                            if (player.getColor() == f.getLblFicha().getColor()) {
+                                player.getCarcel().add(f);
+                            }
+                        });
+                    }
+                });
+            }
             moverObjeto(posicionFinal, fichaUno);
         }
 
@@ -72,6 +85,18 @@ public class StrategyDosFichas implements MovimientoStrategy {
             }
         } else {
             Casilla posicionFinal = Coordenadas.getCoords_tablero().get(indiceFinalDos);
+            if (!posicionFinal.getFichas().isEmpty() && !posicionFinal.isSafe()) {
+                posicionFinal.getFichas().forEach((f) -> {
+                    if (f.getLblFicha().getColor() != fichaDos.getLblFicha().getColor()) {
+                        f.getColor().colorearElemento(f);
+                        Partida.getInstance().getJugadores().forEach((player) -> {
+                            if (player.getColor() == f.getLblFicha().getColor()) {
+                                player.getCarcel().add(f);
+                            }
+                        });
+                    }
+                });
+            }
             moverObjeto(posicionFinal, fichaDos);
         }
 
@@ -79,16 +104,19 @@ public class StrategyDosFichas implements MovimientoStrategy {
 
     @Override
     public int verificarLineaDeGanada(int valor1, int valor2, Ficha ficha) {
-       int contador = 0;
+        int contador = 0;
         boolean contadorWinLane = false;
+        Casilla casilla;
+        Casilla copia = ficha.getCasilla();
         for (int i = 1; i <= (valor1 + valor2); i++) {
-            Casilla casilla = null;
-            if(Coordenadas.getCoords_tablero().indexOf(ficha.getCasilla()) == 67){
-                casilla = Coordenadas.getCoords_tablero().get(0);
-            }else{
-                casilla = Coordenadas.getCoords_tablero().get(Coordenadas.getCoords_tablero().indexOf(ficha.getCasilla()) + i);
+            casilla = copia;
+            int suma = Coordenadas.getCoords_tablero().indexOf(casilla) + i;
+            if (suma >= 68) {
+                casilla = Coordenadas.getCoords_tablero().get(suma - 68);
+            } else {
+                casilla = Coordenadas.getCoords_tablero().get(suma);
             }
-            
+
             if (casilla.getColorGrafico() == ficha.getLblFicha().getColor()) {
                 contadorWinLane = true;
                 continue;

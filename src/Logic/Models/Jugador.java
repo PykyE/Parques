@@ -46,16 +46,20 @@ public class Jugador {
                 sacar.setStrategy(new StrategyCuatroFichas());
                 sacar.sacarFichas(fichas);
                 break;
+            case "Uno":
+                sacar.setStrategy(new Logic.Strategy.Sac.StrategyUnaFicha());
+                sacar.sacarFichas(fichas);
+                break;
         }
     }
 
     public void mover(ArrayList<Ficha> fichas, int valor1, int valor2) {
         if (fichas.size() == 1) {
             movimiento.setStrategy(new StrategyUnaFicha());
-            movimiento.moverFicha(fichas,valor1,valor2);
+            movimiento.moverFicha(fichas, valor1, valor2);
         } else {
             movimiento.setStrategy(new Logic.Strategy.Mov.StrategyDosFichas());
-            movimiento.moverFicha(fichas,valor1,valor2);
+            movimiento.moverFicha(fichas, valor1, valor2);
         }
     }
 
@@ -67,7 +71,7 @@ public class Jugador {
         return nombre;
     }
 
-    public Movimiento getMovimiento(){
+    public Movimiento getMovimiento() {
         return movimiento;
     }
 
