@@ -81,7 +81,7 @@ public class Coordenadas {
         coords_tablero.add(new Casilla(new Posicion(60,216),"Blanca",false));//49
         coords_tablero.add(new Casilla(new Posicion(34,220),"Blanca",false));//50
         coords_tablero.add(new Casilla(new Posicion(10,214),"Blanca",false));//51
-        coords_tablero.add(new Casilla(new Posicion(12,285),"Amarillo",false));//52
+        coords_tablero.add(new Casilla(new Posicion(12,285),"Amarillo   ",false));//52
         coords_tablero.add(new Casilla(new Posicion(11,366),"Blanca",false));//53
         coords_tablero.add(new Casilla(new Posicion(35,367),"Blanca",false));//54
         coords_tablero.add(new Casilla(new Posicion(59,371),"Blanca",false));//55

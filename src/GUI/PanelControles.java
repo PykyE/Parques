@@ -174,7 +174,7 @@ public class PanelControles extends JPanel {
 
                 String dadoSelecc1 = res.get(2).get(0).toString();
                 String dadoSelecc2 = res.get(3).get(0).toString();
-                
+
                 if ((idFichaSelecc1 == idFichaSelecc2)) {
                     Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], (dadoSelecc2.equals("Dado 1")) ? results[0] : results[1]);
                 } else {
@@ -245,13 +245,13 @@ public class PanelControles extends JPanel {
     }
 
     public void showFichasXSacar(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < carcel.size(); i++) {
             if (allPieces) {
-                if(carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))){
+                if (!won.contains(fichas.get(i))) {
                     int index = fichas.indexOf(carcel.get(i));
                     generateJCBSacar(index, false);
                 }
-                
+
             } else {
                 if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
                     int index = fichas.indexOf(carcel.get(i));
@@ -271,7 +271,7 @@ public class PanelControles extends JPanel {
             }
         }
         if (allPieces) {
-            if (cont != 4) {
+            if (cont != Partida.getInstance().getTurnoActual().getCarcel().size()) {
                 throw new NumFichasSeleccIncorrecto("Error sacar todas las fichas de putazo");
             } else {
                 return fichas;

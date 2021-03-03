@@ -32,6 +32,7 @@ public class Rojo implements Color {
 
     @Override
     public void colorearElemento(Casilla casilla) {
+        casilla.setColorGrafico(java.awt.Color.RED);
     }
 
 }

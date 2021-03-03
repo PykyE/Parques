@@ -32,6 +32,7 @@ public class Amarillo implements Color {
 
     @Override
     public void colorearElemento(Casilla casilla) {
+        casilla.setColorGrafico(java.awt.Color.YELLOW);
     }
 
 }

@@ -13,6 +13,7 @@ public class StrategyUnaFicha implements MovimientoStrategy {
     public void moverObjeto(Casilla posicionFinal, Ficha ficha) {
         int x = posicionFinal.getPosicion().getX();
         int y = posicionFinal.getPosicion().getY();
+        ficha.getCasilla().getFichas().remove(ficha);
         ficha.getLblFicha().setLocation(x, y);
         ficha.setCasilla(posicionFinal);
         posicionFinal.getFichas().add(ficha);
@@ -28,51 +29,58 @@ public class StrategyUnaFicha implements MovimientoStrategy {
             }
         }
 
-        if (playerRef.getWon().contains(ficha)) {
+        if ((Coordenadas.getRed_win_lane().contains(ficha.getCasilla())
+                || Coordenadas.getBlue_win_lane().contains(ficha.getCasilla())
+                || Coordenadas.getGreen_win_lane().contains(ficha.getCasilla())
+                || Coordenadas.getYellow_win_lane().contains(ficha.getCasilla()))) {
             int indiceInicial;
             int data;
             if (ficha.getColor() instanceof Rojo) {
                 indiceInicial = Coordenadas.getRed_win_lane().indexOf(ficha.getCasilla());
                 data = indiceInicial + valor1 + valor2;
-                Casilla posicionFinal = Coordenadas.getRed_win_lane().get(data);
-                if (data >= 8) {
+                Casilla posicionFinal;
+                if (data >= 7) {
                     Partida.getInstance().getTurnoActual().getWon().add(ficha);
                     ficha.getLblFicha().setVisible(false);
-                    posicionFinal.getFichas().remove(ficha);
+                    ficha.getCasilla().getFichas().remove(ficha);
                 } else {
+                    posicionFinal = Coordenadas.getRed_win_lane().get(data);
                     moverObjeto(posicionFinal, ficha);
                 }
             } else if (ficha.getColor() instanceof Azul) {
                 indiceInicial = Coordenadas.getBlue_win_lane().indexOf(ficha.getCasilla());
                 data = indiceInicial + valor1 + valor2;
-                Casilla posicionFinal = Coordenadas.getBlue_win_lane().get(data);
-                if (data >= 8) {
+                Casilla posicionFinal;
+                if (data >= 7) {
                     Partida.getInstance().getTurnoActual().getWon().add(ficha);
                     ficha.getLblFicha().setVisible(false);
-                    posicionFinal.getFichas().remove(ficha);
+                    ficha.getCasilla().getFichas().remove(ficha);
                 } else {
+                    posicionFinal = Coordenadas.getBlue_win_lane().get(data);
                     moverObjeto(posicionFinal, ficha);
                 }
             } else if (ficha.getColor() instanceof Amarillo) {
                 indiceInicial = Coordenadas.getYellow_win_lane().indexOf(ficha.getCasilla());
                 data = indiceInicial + valor1 + valor2;
-                Casilla posicionFinal = Coordenadas.getYellow_win_lane().get(data);
-                if (data >= 8) {
+                Casilla posicionFinal;
+                if (data >= 7) {
                     Partida.getInstance().getTurnoActual().getWon().add(ficha);
                     ficha.getLblFicha().setVisible(false);
-                    posicionFinal.getFichas().remove(ficha);
+                    ficha.getCasilla().getFichas().remove(ficha);
                 } else {
+                    posicionFinal = Coordenadas.getYellow_win_lane().get(data);
                     moverObjeto(posicionFinal, ficha);
                 }
             } else {
                 indiceInicial = Coordenadas.getGreen_win_lane().indexOf(ficha.getCasilla());
                 data = indiceInicial + valor1 + valor2;
-                Casilla posicionFinal = Coordenadas.getGreen_win_lane().get(data);
-                if (data >= 8) {
+                Casilla posicionFinal;
+                if (data >= 7) {
                     Partida.getInstance().getTurnoActual().getWon().add(ficha);
                     ficha.getLblFicha().setVisible(false);
-                    posicionFinal.getFichas().remove(ficha);
+                    ficha.getCasilla().getFichas().remove(ficha);
                 } else {
+                    posicionFinal = Coordenadas.getGreen_win_lane().get(data);
                     moverObjeto(posicionFinal, ficha);
                 }
             }
@@ -95,20 +103,24 @@ public class StrategyUnaFicha implements MovimientoStrategy {
                         Casilla posicionFinal = Coordenadas.getGreen_win_lane().get(data);
                         moverObjeto(posicionFinal, ficha);
                     }
-                    playerRef.getWon().add(ficha);
                 }
             } else {
                 Casilla posicionFinal = Coordenadas.getCoords_tablero().get(indiceFinal);
+                ArrayList<Ficha> fichasRemove = new ArrayList<>();
                 if (!posicionFinal.getFichas().isEmpty() && !posicionFinal.isSafe()) {
                     posicionFinal.getFichas().forEach((f) -> {
                         if (f.getLblFicha().getColor() != ficha.getLblFicha().getColor()) {
                             f.getColor().colorearElemento(f);
                             Partida.getInstance().getJugadores().forEach((player) -> {
                                 if (player.getColor() == f.getLblFicha().getColor()) {
+                                    fichasRemove.add(f);
                                     player.getCarcel().add(f);
                                 }
                             });
                         }
+                    });
+                    fichasRemove.forEach((fichaxd) -> {
+                        fichaxd.getCasilla().getFichas().remove(fichaxd);
                     });
                 }
                 moverObjeto(posicionFinal, ficha);
@@ -140,9 +152,10 @@ public class StrategyUnaFicha implements MovimientoStrategy {
                 contador++;
             }
         }
-        if (contador >= 9) {
+        if (contador >= 7) {
             Partida.getInstance().getTurnoActual().getWon().add(ficha);
             ficha.getLblFicha().setVisible(false);
+            ficha.getCasilla().getFichas().remove(ficha);
             casilla.getFichas().remove(ficha);
             return -1;
         }

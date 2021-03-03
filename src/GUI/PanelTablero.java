@@ -72,7 +72,6 @@ public class PanelTablero extends JPanel implements MouseListener {
         StringSelection stringSelection = new StringSelection(myString);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
-        System.out.println(myString);
         
     }
 

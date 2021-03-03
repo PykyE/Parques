@@ -12,7 +12,7 @@ public class Casilla {
     private Posicion posicion;
     private ArrayList<Ficha> fichas = new ArrayList<>();
 
-    public Casilla(Posicion posicion,String nameColor,boolean safe) {
+    public Casilla(Posicion posicion, String nameColor, boolean safe) {
         this.Safe = safe;
         this.posicion = posicion;
         switch (nameColor) {
@@ -59,12 +59,22 @@ public class Casilla {
     public boolean isSafe() {
         return Safe;
     }
-    
-    public void setColorGrafico(java.awt.Color colorGrafico){
+
+    public void setColorGrafico(java.awt.Color colorGrafico) {
         this.colorGrafico = colorGrafico;
     }
 
     public java.awt.Color getColorGrafico() {
         return colorGrafico;
     }
+
+    @Override
+    public String toString() {
+        String retorno = "";
+        for (int i = 0; i < fichas.size(); i++) {
+            retorno += "Ficha #" + i + ": " + fichas.get(i).getiD() + " y su color es: " + fichas.get(i).getColor().getClass() + "\n";
+        }
+        return retorno;
+    }
+
 }
