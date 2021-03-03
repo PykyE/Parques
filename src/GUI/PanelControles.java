@@ -247,7 +247,11 @@ public class PanelControles extends JPanel {
     public void showFichasXSacar(ArrayList carcel, ArrayList fichas, ArrayList won, boolean allPieces) {
         for (int i = 0; i < 4; i++) {
             if (allPieces) {
-                generateJCBSacar(i, false);
+                if(carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))){
+                    int index = fichas.indexOf(carcel.get(i));
+                    generateJCBSacar(index, false);
+                }
+                
             } else {
                 if (!carcel.contains(fichas.get(i)) && !won.contains(fichas.get(i))) {
                     int index = fichas.indexOf(carcel.get(i));
@@ -341,7 +345,7 @@ public class PanelControles extends JPanel {
         } else if ((seleccPanel1.get(0).getiD() != seleccPanel2.get(0).getiD()) && (seleccPanelDados1.get(0).toString() == seleccPanelDados2.get(0).toString())) {
             throw new NumFichasSeleccIncorrecto("Mismo valor de dados seleccionados para distintas fichas");
         } else if (seleccPanel1.get(0).getiD() == seleccPanel2.get(0).getiD() && seleccPanelDados1.get(0).toString() == seleccPanelDados2.get(0).toString() && results[0] != results[1]) {
-            throw new NumFichasSeleccIncorrecto("bro");
+            throw new NumFichasSeleccIncorrecto("Mismo valor de dados seleccionados para distintos dados");
         } else {
             retorno.add(seleccPanel1);
             retorno.add(seleccPanel2);
