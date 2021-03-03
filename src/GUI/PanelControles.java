@@ -174,7 +174,7 @@ public class PanelControles extends JPanel {
 
                 String dadoSelecc1 = res.get(2).get(0).toString();
                 String dadoSelecc2 = res.get(3).get(0).toString();
-
+                
                 if ((idFichaSelecc1 == idFichaSelecc2)) {
                     Partida.getInstance().getTurnoActual().mover(fichaSelecc1, (dadoSelecc1.equals("Dado 1")) ? results[0] : results[1], (dadoSelecc2.equals("Dado 1")) ? results[0] : results[1]);
                 } else {

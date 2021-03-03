@@ -95,6 +95,7 @@ public class StrategyUnaFicha implements MovimientoStrategy {
                         Casilla posicionFinal = Coordenadas.getGreen_win_lane().get(data);
                         moverObjeto(posicionFinal, ficha);
                     }
+                    playerRef.getWon().add(ficha);
                 }
             } else {
                 Casilla posicionFinal = Coordenadas.getCoords_tablero().get(indiceFinal);
